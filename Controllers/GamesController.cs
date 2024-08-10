@@ -18,12 +18,10 @@ namespace GamingStore.Controllers
         }
 
         [HttpGet("GetAllGames")]
-        public async Task<IActionResult> GetAllGames()
+        public async Task<List<Games>> GetAllGames()
         {
             var result = await _gamesService.GetAllGames();
-            if (result.Count == 0) return NoContent();
-            else
-                return Ok(result);
+            return result;
         }
 
         [HttpGet("GetGame")]
