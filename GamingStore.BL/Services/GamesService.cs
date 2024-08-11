@@ -20,19 +20,23 @@ namespace GamingStore.GamingStore.BL.Services
         }
 
         public async Task<List<Games>> GetAllGames()
-        {
-            return  _gamesRepository.GetAllGames();
-        }
+        {      
+                var result = await _gamesRepository.GetAllGames();
+                return result; 
+        }          
+        
 
         public async Task<Games> GetGame(int id)
         {
-            return  _gamesRepository.GetGame(id);
+           var result = await (_gamesRepository.GetGame(id));
+            return result;
         }
 
 
         public async Task<Games> GetGame(string title)
         {
-            return  _gamesRepository.GetGame(title);
+           var result = await (_gamesRepository.GetGame(title));
+            return result;
         }
 
         public async Task RemoveGame(int id)
@@ -40,11 +44,11 @@ namespace GamingStore.GamingStore.BL.Services
             await _gamesRepository.RemoveGame(id);
         }
 
-
-
         public async Task<List<Games>> SearchByTag(string GameTag)
         {
-            return  _gamesRepository.SearchByTag(GameTag);
+
+            var result = await (_gamesRepository.SearchByTag(GameTag));
+            return result;
         }
 
     }

@@ -11,7 +11,7 @@ namespace GamingStore.GamingStore.Models
 
         public DateTime ReleaseDate { get; set; }
 
-        public  string[] GameTags { get; set; }     
+        public  string GameTags { get; set; }     
 
         public decimal Price { get; set; }
     }
