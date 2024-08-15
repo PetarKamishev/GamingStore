@@ -76,11 +76,11 @@ namespace GamingStore.Controllers
             if (string.IsNullOrEmpty(tag)) return BadRequest();
             else
             {
-               var result =  await _gamesService.SearchByTag(tag);
-                if (result == null || result.Count==0) return NotFound();
+                var result = await _gamesService.SearchByTag(tag);
+                if (result == null || result.Count == 0) return NotFound();
                 else return Ok(result);
             }
         }
-        
+
     }
 }

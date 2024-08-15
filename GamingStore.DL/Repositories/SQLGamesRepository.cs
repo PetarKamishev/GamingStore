@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using GamingStore.GamingStore.DL.GamesData;
+
 using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -11,7 +11,7 @@ namespace GamingStore.GamingStore.DL.Repositories
 {
     public class SQLGamesRepository : IGamesRepository
     {
-        private readonly GamesDataContext _games;
+
         private readonly IConfiguration _configuration;
         public SQLGamesRepository(IConfiguration configuration)
         {
@@ -25,7 +25,7 @@ namespace GamingStore.GamingStore.DL.Repositories
                 await connect.OpenAsync();
                 string query = "INSERT INTO Games (TITLE,ReleaseDate,Price,GameTags) VALUES(@Title, @ReleaseDate, @Price, @GameTags)";
                 var result = await connect.ExecuteAsync(query, game);
-                
+
             }
         }
 
@@ -36,7 +36,7 @@ namespace GamingStore.GamingStore.DL.Repositories
             {
 
                 await connect.OpenAsync();
-                var games = await connect.QueryAsync<Games>("SELECT * FROM Games");             
+                var games = await connect.QueryAsync<Games>("SELECT * FROM Games");
                 return games.ToList();
 
             }
@@ -57,7 +57,7 @@ namespace GamingStore.GamingStore.DL.Repositories
             using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
             {
                 await connect.OpenAsync();
-                var game = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(TITLE) LIKE LOWER('%{title}%')") ;
+                var game = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(TITLE) LIKE LOWER('%{title}%')");
                 return game.FirstOrDefault();
             }
         }
@@ -77,8 +77,8 @@ namespace GamingStore.GamingStore.DL.Repositories
         {
             using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
             {
-                await connect.OpenAsync();               
-                var result = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(GameTags) LIKE LOWER('%{GameTag}%')") ;
+                await connect.OpenAsync();
+                var result = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(GameTags) LIKE LOWER('%{GameTag}%')");
                 return result.ToList();
             }
 
