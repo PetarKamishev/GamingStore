@@ -2,9 +2,7 @@
 
 using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Data.SqlClient;
-using System.Diagnostics.Eventing.Reader;
 
 
 namespace GamingStore.GamingStore.DL.Repositories
@@ -23,8 +21,12 @@ namespace GamingStore.GamingStore.DL.Repositories
             using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
             {
                 await connect.OpenAsync();
-                string query = "INSERT INTO Games (TITLE,ReleaseDate,Price,GameTags) VALUES(@Title, @ReleaseDate, @Price, @GameTags)";
-                var result = await connect.ExecuteAsync(query, game);
+
+                var query = ("INSERT INTO Games (TITLE, ReleaseDate, Price, GameTags) VALUES( @Title, @ReleaseDate, @Price, @GameTags)");
+                   
+                var gameQuery = new {Title= game.Title, ReleaseDate= game.ReleaseDate, Price= game.Price, GameTags= game.GameTags};
+
+                var result = await connect.ExecuteAsync(query, gameQuery);
 
             }
         }
@@ -57,7 +59,7 @@ namespace GamingStore.GamingStore.DL.Repositories
             using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
             {
                 await connect.OpenAsync();
-                var game = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(TITLE) LIKE LOWER('%{title}%')");
+                var game = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(TITLE) LIKE LOWER(@Title)", new {Title=$"%{title}%"});
                 return game.FirstOrDefault();
             }
         }
@@ -67,9 +69,8 @@ namespace GamingStore.GamingStore.DL.Repositories
             using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
             {
                 await connect.OpenAsync();
-                var query = "DELETE FROM Games WHERE Id = @Id";
-                var result = await connect.ExecuteAsync(query, new { Id = id });
-
+                var query = connect.ExecuteAsync("DELETE FROM Games WHERE Id = @Id", new {Id= id});
+                
             }
         }
 
@@ -78,7 +79,7 @@ namespace GamingStore.GamingStore.DL.Repositories
             using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
             {
                 await connect.OpenAsync();
-                var result = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(GameTags) LIKE LOWER('%{GameTag}%')");
+                var result = await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE LOWER(GameTags) LIKE LOWER(@GameTag)", new {GameTag= $"%{GameTag}%"});
                 return result.ToList();
             }
 
