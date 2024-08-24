@@ -1,7 +1,7 @@
 ﻿using Dapper;
 
 using GamingStore.GamingStore.DL.Interfaces;
-using GamingStore.GamingStore.Models;
+using GamingStore.GamingStore.Models.Models;
 using Microsoft.Data.SqlClient;
 
 

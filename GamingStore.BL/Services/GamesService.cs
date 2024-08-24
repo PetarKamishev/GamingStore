@@ -1,7 +1,6 @@
 ﻿using GamingStore.GamingStore.BL.Interfaces;
-using GamingStore.GamingStore.DL.InMemoryDb;
 using GamingStore.GamingStore.DL.Interfaces;
-using GamingStore.GamingStore.Models;
+using GamingStore.GamingStore.Models.Models;
 
 namespace GamingStore.GamingStore.BL.Services
 {

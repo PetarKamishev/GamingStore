@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace GamingStore.GamingStore.Models
+namespace GamingStore.GamingStore.Models.Models
 {
     public class Games
     {
@@ -12,7 +12,7 @@ namespace GamingStore.GamingStore.Models
 
         public DateTime ReleaseDate { get; set; }
 
-        public  string GameTags { get; set; }     
+        public string GameTags { get; set; }
 
         public decimal Price { get; set; }
     }
