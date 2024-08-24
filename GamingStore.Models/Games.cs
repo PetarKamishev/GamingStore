@@ -5,7 +5,8 @@ namespace GamingStore.GamingStore.Models
     public class Games
     {
         public required string Title { get; set; }
-        public string Description { get; set; } = string.Empty;
+
+        public string Desctiption { get; set; } = string.Empty;
 
         public int Id { get; set; }
 

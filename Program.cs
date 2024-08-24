@@ -1,7 +1,6 @@
 
 using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.BL.Services;
-using GamingStore.GamingStore.DL.GamesData;
 using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.DL.Repositories;
 using GamingStore.GamingStore.Models;
@@ -22,9 +21,9 @@ namespace GamingStore
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddScoped<IGamesRepository, SQLGamesRepository>();
-            builder.Services.AddScoped<IGamesService, GamesService>();
-           
+            builder.Services.AddSingleton<IGamesRepository, SQLGamesRepository>();
+            builder.Services.AddSingleton<IGamesService, GamesService>();
+
 
             var app = builder.Build();
 
@@ -34,7 +33,7 @@ namespace GamingStore
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            
+
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
