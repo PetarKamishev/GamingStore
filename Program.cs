@@ -1,4 +1,6 @@
 
+using GamingStore.AutoMapper;
+using GamingStore.Extensions;
 using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.BL.Services;
 using GamingStore.GamingStore.DL.Interfaces;
@@ -17,13 +19,9 @@ namespace GamingStore
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-            builder.Services.AddSingleton<IGamesRepository, SQLGamesRepository>();
-            builder.Services.AddSingleton<IGamesService, GamesService>();
-
+            builder.Services.RegisterRepositories()
+                .RegisterServices();
+           
 
             var app = builder.Build();
 

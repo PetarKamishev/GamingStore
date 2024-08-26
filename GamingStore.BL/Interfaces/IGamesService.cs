@@ -1,4 +1,4 @@
-﻿using GamingStore.GamingStore.Models;
+﻿using GamingStore.GamingStore.Models.Models;
 
 namespace GamingStore.GamingStore.BL.Interfaces
 {

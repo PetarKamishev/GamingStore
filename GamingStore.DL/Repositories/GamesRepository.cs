@@ -6,7 +6,7 @@ using System.Reflection.Metadata.Ecma335;
 
 namespace GamingStore.GamingStore.DL.Repositories
 {
-   public class GamesRepository : IGamesRepository
+   /*public class GamesRepository : IGamesRepository
     {
        public async Task AddGame(Games game)
         {
@@ -47,5 +47,5 @@ namespace GamingStore.GamingStore.DL.Repositories
             }
             return result;
         }
-    } 
+    } */
 }

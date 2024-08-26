@@ -1,8 +1,10 @@
 ﻿using GamingStore.GamingStore.BL.Interfaces;
-using GamingStore.GamingStore.Models;
+using GamingStore.GamingStore.Models.Requests;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
+using AutoMapper;
+using GamingStore.GamingStore.Models.Models;
 
 namespace GamingStore.Controllers
 {
@@ -11,10 +13,12 @@ namespace GamingStore.Controllers
     public class GamesController : ControllerBase
     {
         private readonly IGamesService _gamesService;
-
-        public GamesController(IGamesService gamesService)
+        private readonly IMapper _mapper;
+        public GamesController(IGamesService gamesService, IMapper mapper)
         {
             _gamesService = gamesService;
+            _mapper = mapper;  
+
         }
 
         [HttpGet("GetAllGames")]
@@ -47,12 +51,16 @@ namespace GamingStore.Controllers
         }
 
         [HttpPost("AddGame")]
-        public async Task<IActionResult> AddGame([FromBody] Games game)
+        public async Task<IActionResult> AddGame([FromBody] AddGameRequest addGameRequest)
         {
-            if (game == null) return BadRequest();
+            if (addGameRequest == null) return BadRequest(addGameRequest);
+
+            var game = await _gamesService.GetGame(addGameRequest.Title);
+            if (game != null) return BadRequest("Game already exists!");
             else
             {
-                await _gamesService.AddGame(game);
+                var gameToAdd = _mapper.Map<Games>(addGameRequest);
+                await _gamesService.AddGame(gameToAdd);
                 return Ok();
             }
         }
