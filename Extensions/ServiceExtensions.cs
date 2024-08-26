@@ -3,6 +3,8 @@ using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.BL.Services;
 using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.DL.Repositories;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 namespace GamingStore.Extensions
 {
@@ -15,12 +17,14 @@ namespace GamingStore.Extensions
             services.AddSwaggerGen();           
             services.AddSingleton<IGamesService, GamesService>();
             services.AddAutoMapper(typeof(AutoMapping));
+            services.AddFluentValidationAutoValidation();
+            services.AddValidatorsFromAssemblyContaining(typeof(Program));
             return services;
         }
 
         public static IServiceCollection RegisterRepositories(this IServiceCollection services)
         {
-            services.AddSingleton<IGamesRepository, SQLGamesRepository>();
+            services.AddSingleton<IGamesRepository, SQLGamesRepository>();           
             return services;
         }
     }

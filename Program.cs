@@ -8,6 +8,7 @@ using GamingStore.GamingStore.DL.Repositories;
 using GamingStore.GamingStore.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using FluentValidation;
 
 namespace GamingStore
 {
@@ -21,10 +22,10 @@ namespace GamingStore
 
             builder.Services.RegisterRepositories()
                 .RegisterServices();
-           
+            
 
             var app = builder.Build();
-
+            
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
