@@ -1,4 +1,6 @@
 ﻿using FluentValidation;
+using GamingStore.GamingStore.BL.Services;
+using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.Models.Requests;
 
 namespace GamingStore.Validators

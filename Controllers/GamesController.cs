@@ -31,7 +31,7 @@ namespace GamingStore.Controllers
         [HttpGet("GetGame")]
         public async Task<IActionResult> GetGame(int id)
         {
-            if (id == 0) return BadRequest();
+            if (id <= 0) return BadRequest();
             else
             {
                 var result = await _gamesService.GetGame(id);
@@ -69,7 +69,9 @@ namespace GamingStore.Controllers
 
         public async Task<IActionResult> RemoveGame(int id)
         {
-            if (id.Equals(0)) return BadRequest();
+            if (id <= 0 ) return BadRequest();
+            var game = await _gamesService.GetGame(id);
+            if (game == null) return BadRequest("Game not found!");
             else
             {
                 await _gamesService.RemoveGame(id);
@@ -85,7 +87,7 @@ namespace GamingStore.Controllers
             else
             {
                 var result = await _gamesService.SearchByTag(tag);
-                if (result == null || result.Count == 0) return NotFound();
+                if (result == null || result.Count == 0) return NotFound("Game not found!");
                 else return Ok(result);
             }
         }
