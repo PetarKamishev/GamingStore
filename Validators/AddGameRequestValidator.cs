@@ -13,6 +13,6 @@ namespace GamingStore.Validators
             RuleFor(x => x.Price).NotNull().GreaterThanOrEqualTo(0);
             RuleFor(x => x.ReleaseDate).NotEmpty().GreaterThan(new DateTime(1950, 01, 01));
             RuleFor(x => x.GameTags).NotEmpty();
-        }
+        }      
     }
 }

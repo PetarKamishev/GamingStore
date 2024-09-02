@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using AutoMapper;
 using GamingStore.GamingStore.Models.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace GamingStore.Controllers
 {
@@ -17,7 +18,7 @@ namespace GamingStore.Controllers
         public GamesController(IGamesService gamesService, IMapper mapper)
         {
             _gamesService = gamesService;
-            _mapper = mapper;  
+            _mapper = mapper;
 
         }
 
@@ -65,11 +66,29 @@ namespace GamingStore.Controllers
             }
         }
 
+        [HttpPatch("AddGameTag")]
+
+        public async Task<Games> AddGameTag([FromBody] AddGameTagRequest addGameTagRequest)
+        {
+            await _gamesService.AddGameTag(addGameTagRequest.Title, addGameTagRequest.GameTag);
+            var game = await _gamesService.GetGame(addGameTagRequest.Title);
+            return game;
+        }
+
+        [HttpDelete("RemoveGameTag")]
+
+        public async Task<Games> RemoveGameTag([FromBody] RemoveGameTagRequest removeGameTagRequest)
+        {
+            await _gamesService.RemoveGameTag(removeGameTagRequest.Title, removeGameTagRequest.GameTag);
+            var game = await _gamesService.GetGame(removeGameTagRequest.Title);
+            return game;
+        }
+
         [HttpDelete("RemoveGame")]
 
         public async Task<IActionResult> RemoveGame(int id)
         {
-            if (id <= 0 ) return BadRequest();
+            if (id <= 0) return BadRequest("Invalid Id!");
             var game = await _gamesService.GetGame(id);
             if (game == null) return BadRequest("Game not found!");
             else
