@@ -8,6 +8,9 @@ namespace GamingStore.GamingStore.BL.Interfaces
         Task<Games> GetGame(int id);
         Task<Games> GetGame(string title);
 
+        Task<Games> AddGameTag(string title, string gameTag);
+
+        Task<Games> RemoveGameTag(string title, string gameTag);
         Task AddGame(Games game);
         Task RemoveGame(int id);
 
