@@ -10,22 +10,26 @@ namespace GamingStore.Extensions
 {
     public static class ServiceExtensions
     {
+        public static IServiceCollection RegisterRepositories(this IServiceCollection services)
+        {
+            services.AddSingleton<IGamesRepository, SQLGamesRepository>();       
+            services.AddSingleton<IOrdersRepository, OrdersRepository>();
+            return services;
+        }
+
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
             services.AddControllers();      
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();           
             services.AddSingleton<IGamesService, GamesService>();
+            services.AddSingleton<IOrdersService, OrdersService>();
             services.AddAutoMapper(typeof(AutoMapping));
             services.AddFluentValidationAutoValidation();
             services.AddValidatorsFromAssemblyContaining(typeof(Program));
             return services;
         }
 
-        public static IServiceCollection RegisterRepositories(this IServiceCollection services)
-        {
-            services.AddSingleton<IGamesRepository, SQLGamesRepository>();           
-            return services;
-        }
+        
     }
 }
