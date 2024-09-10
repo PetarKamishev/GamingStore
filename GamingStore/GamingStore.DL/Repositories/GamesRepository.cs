@@ -23,7 +23,7 @@ namespace GamingStore.GamingStore.DL.Repositories
            return InMemoryDb.InMemoryDb.GamesData.First(x => x.Id == id);
         }
 
-        public async Task<Games> GetGame(string title)
+        public async Task<Games> GetGame(AddOrderRequest title)
         {
             return InMemoryDb.InMemoryDb.GamesData.First(x=>x.Title.ToLower().Contains(title.ToLower()));
         }
@@ -35,7 +35,7 @@ namespace GamingStore.GamingStore.DL.Repositories
             return Task.CompletedTask;
         }
 
-        public async Task<List<Games>> SearchByTag(string GameTag)
+        public async Task<List<Games>> SearchByTag(AddOrderRequest GameTag)
         {
             var result= new List<Games>();
             List<Games> allGames = await GetAllGames();

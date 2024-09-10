@@ -1,11 +1,8 @@
-﻿using GamingStore.GamingStore.BL.Interfaces;
-using GamingStore.GamingStore.Models.Requests;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.Json.Serialization;
-using AutoMapper;
+﻿using AutoMapper;
+using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.Models.Models;
-using Microsoft.IdentityModel.Tokens;
+using GamingStore.GamingStore.Models.Requests;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GamingStore.Controllers
 {

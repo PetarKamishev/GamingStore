@@ -9,6 +9,9 @@ namespace GamingStore.AutoMapper
         public AutoMapping() 
         {
             CreateMap<AddGameRequest, Games>();
+            CreateMap<AddGameTagRequest, Games>();
+            CreateMap<RemoveGameTagRequest, Games>();
+            CreateMap<AddOrderRequest, Orders>();           
         }
     }
 }
