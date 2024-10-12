@@ -2,10 +2,11 @@
 using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.Models.Models;
 using GamingStore.GamingStore.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamingStore.Controllers
-{
+{   
     [ApiController]
     [Route("api/[controller]")]
     public class GamesController : ControllerBase
@@ -18,7 +19,7 @@ namespace GamingStore.Controllers
             _mapper = mapper;
 
         }
-
+       
         [HttpGet("GetAllGames")]
         public async Task<List<Games>> GetAllGames()
         {

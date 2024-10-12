@@ -5,6 +5,7 @@ using GamingStore.GamingStore.BL.Services;
 using GamingStore.GamingStore.DL.Kafka;
 using GamingStore.GamingStore.Models.Models;
 using GamingStore.GamingStore.Models.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using System.ComponentModel;
@@ -12,7 +13,7 @@ using System.Security.Cryptography;
 using System.Text.Json.Serialization;
 
 namespace GamingStore.Controllers
-{
+{   
     [ApiController]
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
@@ -28,6 +29,7 @@ namespace GamingStore.Controllers
             
         }
 
+        [Authorize(AuthenticationSchemes = "Bearer")]
         [HttpGet("GetAllOrders")]
 
         public async Task<List<Orders>> GetAllOrders()
