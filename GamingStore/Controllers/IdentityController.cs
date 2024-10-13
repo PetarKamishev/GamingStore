@@ -62,36 +62,10 @@ namespace GamingStore.Controllers
             {
                 return BadRequest();
             }
-            var user = await _identityService.CheckUserAndPassword(request.UserName, request.Password);
-
-            if(user == null) return BadRequest();
-            else
-            {
-                var userRoles = await _identityService.GetRoles(user);
-                var claims = new List<Claim>
-                {
-                    new Claim("UserId" , user.UserId.ToString()),
-                    new Claim("UserName", user.UserName),
-                    new Claim("Email" , user.Email)
-                };
-
-                foreach(var role in userRoles)
-                {
-                    claims.Add(new Claim(ClaimTypes.Role, role));
-                }
-
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]));
-                var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-                var token = new JwtSecurityToken(_configuration["JwtSettings:Issuer"],
-                    _configuration["JwtSettings:Audience"],
-                    claims,
-                    expires:DateTime.Now.AddMinutes(15),
-                    signingCredentials:signIn);
-
-                return Ok(new JwtSecurityTokenHandler().WriteToken(token));
-            }
-           
+            var result = await _identityService.LoginAsync(request.UserName, request.Password);
+            return Ok(result);           
         }
+
         [HttpGet("GetRoles")]
 
         public async Task<IEnumerable<string>> GetRoles(string userId)

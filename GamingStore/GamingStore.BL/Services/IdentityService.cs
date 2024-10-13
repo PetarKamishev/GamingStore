@@ -1,7 +1,9 @@
 ﻿using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.Models.Configurations.Identity;
 using GamingStore.GamingStore.Models.Responses;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -15,34 +17,60 @@ namespace GamingStore.GamingStore.BL.Services
         private readonly SignInManager<Models.Models.Users.IdentityUser> _signInManager;
         private readonly JwtSettings _jwtSettings;
         private readonly IPasswordHasher<Models.Models.Users.IdentityUser> _passwordHasher;
+        private readonly IConfiguration _configuration;
 
 
         public IdentityService(UserManager<Models.Models.Users.IdentityUser> userManager,
             SignInManager<Models.Models.Users.IdentityUser> signInManager,
             JwtSettings jwtSettings,
-            IPasswordHasher<Models.Models.Users.IdentityUser> passwordHasher)
+            IPasswordHasher<Models.Models.Users.IdentityUser> passwordHasher,
+            IConfiguration configuration
+            )
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _jwtSettings = jwtSettings;
             _passwordHasher = passwordHasher;
+            _configuration = configuration;
         }
-        public async Task<IdentityResult> LoginAsync(string userName, string password)
+        public async Task<string> LoginAsync(string userName, string password)
         {
             var user = await _userManager.FindByNameAsync(userName);
             if (user == null)
             {
-                return IdentityResult.Failed();
-
+                return "User does not exist!";
             }
+
             var validPassword = await _userManager.CheckPasswordAsync(user, password);
             if (!validPassword)
             {
-                return IdentityResult.Failed();
+                return "Invalid username or password!";
+            }
+            var userRoles = await GetRoles(user);
+            var claims = new List<Claim>
+                {
+                    new Claim("UserId" , user.UserId.ToString()),
+                    new Claim("UserName", user.UserName),
+                    new Claim("Email" , user.Email)
+                };
+
+            foreach (var role in userRoles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
             }
 
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtSettings:Secret"]));
+            var signIn = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            var token = new JwtSecurityToken(_configuration["JwtSettings:Issuer"],
+                _configuration["JwtSettings:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(15),
+                signingCredentials: signIn);
+
+        
             await _signInManager.SignInAsync(user, isPersistent: false);
-            return IdentityResult.Success;
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
 
