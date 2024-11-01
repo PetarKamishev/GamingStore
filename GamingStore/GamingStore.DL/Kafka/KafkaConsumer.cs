@@ -7,7 +7,7 @@ namespace GamingStore.GamingStore.DL.Kafka
     {
         private static IConsumer<Guid, Orders> _consumer;
         
-        public Task ExecuteAsync(CancellationToken cancellationToken)
+        public async Task<Orders> ExecuteAsync()
         {
             var config = new ConsumerConfig()
             {
@@ -28,8 +28,9 @@ namespace GamingStore.GamingStore.DL.Kafka
 
             _consumer.Subscribe(topics);
 
-            Console.WriteLine($"{_consumer.Consume()}"); 
-            return Task.CompletedTask;
+            var result =  _consumer.Consume();
+
+            return result.Value;
         }
     }
 }

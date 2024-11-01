@@ -1,15 +1,17 @@
 ﻿using GamingStore.GamingStore.BL.Interfaces;
+using GamingStore.GamingStore.DL.Dataflow;
 using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.DL.Kafka;
 using GamingStore.GamingStore.Models.Models;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks.Dataflow;
 
 namespace GamingStore.GamingStore.BL.Services
 {
     public class OrdersService : IOrdersService
     {
-        private readonly IOrdersRepository _ordersRepository;
+        private readonly IOrdersRepository _ordersRepository;  
        
 
         public OrdersService(IOrdersRepository ordersRepository)
@@ -54,6 +56,12 @@ namespace GamingStore.GamingStore.BL.Services
         public async Task RemoveOrder(int id)
         {
             await _ordersRepository.RemoveOrder(id);
+        }
+
+        public async Task DataflowExecute()
+        {
+            var dataflow = new DataflowConsumeAndProduce();
+            await dataflow.DataflowConsume();         
         }
     }
 }

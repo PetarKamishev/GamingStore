@@ -17,5 +17,7 @@ namespace GamingStore.GamingStore.BL.Interfaces
         Task AddOrder(Orders orders);
 
         Task RemoveOrder(int id);
+
+        Task DataflowExecute();
     }
 }

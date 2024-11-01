@@ -92,6 +92,31 @@ namespace GamingStore.GamingStore.DL.Repositories
             }
         }
 
+        public async Task<List<string>> GetGameTitlesByClientName(string clientName)
+        {
+            using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
+            {
+                await connect.OpenAsync();
+                var gameTitles = new List<string>();
+                var gamesFound = new List<Games>();
+                var orders = await connect.QueryAsync<Orders>($"SELECT * FROM Orders WHERE LOWER(ClientName) LIKE LOWER(@clientName)", new { ClientName = $"{clientName}" });
+                foreach(var order in orders)
+                {
+                    var id = order.GameId;
+                    gamesFound.Add((Games)await connect.QueryAsync<Games>($"SELECT * FROM Games WHERE Id == @id", new { Id = id }));
+                }                
+                if (gamesFound != null)
+                {
+                    foreach(var game  in gamesFound)
+                    {                       
+                        gameTitles.Add(game.Title);
+                    }
+                    return gameTitles;
+                }
+                else return new List<string>();
+            }
+        }
+
         public async Task RemoveOrder(int id)
         {
             using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))

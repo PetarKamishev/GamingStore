@@ -8,6 +8,7 @@ using GamingStore.GamingStore.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Storage.Json;
+using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel;
 using System.Security.Cryptography;
 using System.Text.Json.Serialization;
@@ -110,6 +111,14 @@ namespace GamingStore.Controllers
                 await _ordersService.RemoveOrder(orderId);
                 return Ok(order);
             }
+        }
+
+        [HttpGet("Dataflow")]
+
+        public async Task<IActionResult> DataflowExecute()
+        {
+           await _ordersService.DataflowExecute();
+            return Ok();
         }
     }
 }
