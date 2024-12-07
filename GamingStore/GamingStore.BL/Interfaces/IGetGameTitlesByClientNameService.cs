@@ -2,6 +2,6 @@
 {
     public interface IGetGameTitlesByClientNameService
     {
-         Task<List<string>> GetGameTitlesByClientName(string gameTitle);
+         Task<List<string>> GetGameTitlesByClientName(string clientName);
     }
 }

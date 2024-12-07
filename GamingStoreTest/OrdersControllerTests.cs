@@ -6,14 +6,7 @@ using GamingStore.GamingStore.BL.Services;
 using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.Models.Models;
 using GamingStore.GamingStore.Models.Requests;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GamingStoreTest
 {
@@ -104,6 +97,8 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
 
             //Act
@@ -132,7 +127,12 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act
 
@@ -160,7 +160,12 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act 
 
@@ -188,7 +193,12 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act
 
@@ -214,7 +224,11 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
 
             //Act 
 
@@ -240,7 +254,11 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
 
             //Act 
 
@@ -266,7 +284,12 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act 
 
@@ -293,7 +316,11 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
 
             //Act
 
@@ -320,7 +347,11 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
 
             //Act
 
@@ -349,7 +380,12 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act 
 
@@ -388,7 +424,12 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act 
 
@@ -421,7 +462,12 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act
 
@@ -452,7 +498,11 @@ namespace GamingStoreTest
             //Inject
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
 
             //Act
 
@@ -483,7 +533,12 @@ namespace GamingStoreTest
             //Inject 
 
             var ordersService = new OrdersService(mockedOrdersRepository.Object);
+            var clientNameService = new GetGameTitlesByClientNameService(mockedOrdersRepository.Object);
+            var flowService = new DataflowService(clientNameService);
             var ordersController = new OrderController(ordersService, _mapper);
+
+
+
 
             //Act 
 

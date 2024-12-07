@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GamingStore.Controllers
-{   
+{
     [ApiController]
     [Route("api/[controller]")]
     public class GamesController : ControllerBase
@@ -19,12 +19,11 @@ namespace GamingStore.Controllers
             _mapper = mapper;
 
         }
-       
+
         [HttpGet("GetAllGames")]
         public async Task<List<Games>> GetAllGames()
         {
-            var result = await _gamesService.GetAllGames();
-            return result;
+            return await _gamesService.GetAllGames();
         }
 
         [HttpGet("GetGame")]
@@ -69,8 +68,7 @@ namespace GamingStore.Controllers
         public async Task<Games> AddGameTag([FromBody] AddGameTagRequest addGameTagRequest)
         {
             await _gamesService.AddGameTag(addGameTagRequest.Title, addGameTagRequest.GameTag);
-            var game = await _gamesService.GetGame(addGameTagRequest.Title);
-            return game;
+            return await _gamesService.GetGame(addGameTagRequest.Title);         
         }
 
         [HttpDelete("RemoveGameTag")]
@@ -78,8 +76,7 @@ namespace GamingStore.Controllers
         public async Task<Games> RemoveGameTag([FromBody] RemoveGameTagRequest removeGameTagRequest)
         {
             await _gamesService.RemoveGameTag(removeGameTagRequest.Title, removeGameTagRequest.GameTag);
-            var game = await _gamesService.GetGame(removeGameTagRequest.Title);
-            return game;
+            return await _gamesService.GetGame(removeGameTagRequest.Title);           
         }
 
         [HttpDelete("RemoveGame")]

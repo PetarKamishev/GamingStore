@@ -61,9 +61,8 @@ namespace GamingStore.Controllers
             if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
             {
                 return BadRequest();
-            }
-            var result = await _identityService.LoginAsync(request.UserName, request.Password);
-            return Ok(result);           
+            }        
+            return Ok(await _identityService.LoginAsync(request.UserName, request.Password));           
         }
 
         [HttpGet("GetRoles")]

@@ -60,7 +60,7 @@ namespace GamingStore.GamingStore.BL.Services
         public async Task<List<Games>> SearchByTag(string GameTag)
         {
 
-            var result = await (_gamesRepository.SearchByTag(GameTag));
+            var result = await _gamesRepository.SearchByTag(GameTag);
             return result;
         }
 

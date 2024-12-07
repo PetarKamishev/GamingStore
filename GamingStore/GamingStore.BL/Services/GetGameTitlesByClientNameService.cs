@@ -1,5 +1,6 @@
 ﻿using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.DL.Interfaces;
+using GamingStore.GamingStore.DL.Repositories;
 
 namespace GamingStore.GamingStore.BL.Services
 {
@@ -7,17 +8,15 @@ namespace GamingStore.GamingStore.BL.Services
     {
         private readonly IOrdersRepository _ordersRepository;
 
-        public GetGameTitlesByClientNameService()
-        {
-        }
 
         public GetGameTitlesByClientNameService(IOrdersRepository ordersRepository)
         {
             _ordersRepository = ordersRepository;
         }
-        public async Task<List<string>> GetGameTitlesByClientName(string gameTitle)
+        public async Task<List<string>> GetGameTitlesByClientName(string clientName)
         {
-            return await _ordersRepository.GetGameTitlesByClientName(gameTitle);
+            var result = await _ordersRepository.GetGameTitlesByClientName(clientName);
+            return result;
         }
     }
 }

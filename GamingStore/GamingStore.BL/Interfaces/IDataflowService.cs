@@ -2,8 +2,8 @@
 
 namespace GamingStore.GamingStore.BL.Interfaces
 {
-    public interface IConsumeOrderService
+    public interface IDataflowService
     {
-        Task<Orders> ConsumeOrder();
+        Task SendAsync(Orders order);
     }
 }

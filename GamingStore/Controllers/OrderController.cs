@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Confluent.Kafka;
+using GamingStore.GamingStore.BL.BackgroundJobs;
 using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.BL.Services;
 using GamingStore.GamingStore.DL.Kafka;
@@ -7,27 +7,20 @@ using GamingStore.GamingStore.Models.Models;
 using GamingStore.GamingStore.Models.Requests;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Storage.Json;
-using Microsoft.IdentityModel.Tokens;
-using System.ComponentModel;
-using System.Security.Cryptography;
-using System.Text.Json.Serialization;
 
 namespace GamingStore.Controllers
-{   
+{
     [ApiController]
     [Route("api/[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly IOrdersService _ordersService;
-        private readonly IMapper _mapper;        
-        
+        private readonly IMapper _mapper;
 
-        public OrderController(IOrdersService ordersService, IMapper mapper )
+        public OrderController(IOrdersService ordersService, IMapper mapper)
         {
             _ordersService = ordersService;
-            _mapper = mapper;       
-            
+            _mapper = mapper;
         }
 
         [Authorize(AuthenticationSchemes = "Bearer")]
@@ -35,8 +28,7 @@ namespace GamingStore.Controllers
 
         public async Task<List<Orders>> GetAllOrders()
         {
-            var result = await _ordersService.GetAllOrders();
-            return result;
+            return await _ordersService.GetAllOrders();
         }
 
         [HttpGet("GetOrdersByGameId")]
@@ -45,8 +37,7 @@ namespace GamingStore.Controllers
         {
             if (gameId >= 0)
             {
-                var result = await _ordersService.GetOrdersByGameId(gameId);
-                return result;
+                return await _ordersService.GetOrdersByGameId(gameId);
             }
             else return new List<Orders>();
         }
@@ -67,8 +58,7 @@ namespace GamingStore.Controllers
         {
             if (!string.IsNullOrEmpty(clientName))
             {
-                var result = await _ordersService.GetOrdersByClientName(clientName);
-                return result;
+                return await _ordersService.GetOrdersByClientName(clientName);
             }
             else return new List<Orders>();
         }
@@ -79,14 +69,21 @@ namespace GamingStore.Controllers
         {
             if (!string.IsNullOrEmpty(gameTitle))
             {
-                var result = await _ordersService.GetSpecificGameOrders(gameTitle);
-                return result;
+                return await _ordersService.GetSpecificGameOrders(gameTitle);
             }
             else return new List<Orders>();
-        }     
+        }
+
+        [HttpGet("GetOrdersCount")]
+
+        public async Task<int> GetOrdersCount()
+        {
+            return await _ordersService.GetOrdersCount();
+        }
+
         [HttpPost("AddOrder")]
 
-        public async Task<IActionResult> AddOrder([FromBody]AddOrderRequest request)
+        public async Task<IActionResult> AddOrder([FromBody] AddOrderRequest request)
         {
             if (request == null) return BadRequest();
             else
@@ -98,6 +95,7 @@ namespace GamingStore.Controllers
                 return Ok(orderToAdd);
             }
         }
+
 
         [HttpDelete("RemoveOrder")]
 
@@ -111,14 +109,6 @@ namespace GamingStore.Controllers
                 await _ordersService.RemoveOrder(orderId);
                 return Ok(order);
             }
-        }
-
-        [HttpGet("Dataflow")]
-
-        public async Task<IActionResult> DataflowExecute()
-        {
-           await _ordersService.DataflowExecute();
-            return Ok();
         }
     }
 }

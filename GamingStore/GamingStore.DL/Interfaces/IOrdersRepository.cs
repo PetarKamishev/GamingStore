@@ -15,7 +15,9 @@ namespace GamingStore.GamingStore.DL.Interfaces
 
         Task<List<Orders>> GetSpecificGameOrders(string gameTitle);
 
-        Task<List<string>> GetGameTitlesByClientName(string gameTitle);
+        Task<List<string>> GetGameTitlesByClientName(string clientName);
+
+        Task<int> GetOrdersCount();
         Task AddOrder(Orders orders);
 
         Task RemoveOrder(int id);

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using GamingStore.GamingStore.Models;
 using GamingStore.GamingStore.Models.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
@@ -8,6 +9,7 @@ namespace GamingStore.GamingStore.DL.Repositories
     public class IdentityUserRolesStore : IRoleStore<IdentityUserRoles>
     {
         private readonly IConfiguration _configuration;
+        private SQLConfiguration _sqlConfiguration = new SQLConfiguration();
 
         public IdentityUserRolesStore(IConfiguration configuration)
         {
@@ -16,7 +18,7 @@ namespace GamingStore.GamingStore.DL.Repositories
 
         public async Task<IdentityResult> CreateAsync(IdentityUserRoles role, CancellationToken cancellationToken)
         {
-            using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
+            using (var connect = new SqlConnection(_configuration.GetConnectionString(_sqlConfiguration.ConnectionString)))
             {
                 await connect.OpenAsync(cancellationToken);
                 var query = @"INSERT INTO UserRoles([Id], [RoleName], [UserId]) VALUES(@Id, @RoleName, @UserId)";
@@ -28,7 +30,7 @@ namespace GamingStore.GamingStore.DL.Repositories
 
         public async Task<IdentityResult> DeleteAsync(IdentityUserRoles role, CancellationToken cancellationToken)
         {
-            using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
+            using (var connect = new SqlConnection(_configuration.GetConnectionString(_sqlConfiguration.ConnectionString)))
             {
                 await connect.OpenAsync();
 
@@ -44,7 +46,7 @@ namespace GamingStore.GamingStore.DL.Repositories
 
         public async Task<IdentityUserRoles?> FindByIdAsync(string roleId, CancellationToken cancellationToken)
         {
-            using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
+            using (var connect = new SqlConnection(_configuration.GetConnectionString(_sqlConfiguration.ConnectionString)))
             {
                 await connect.OpenAsync();
 
@@ -55,7 +57,7 @@ namespace GamingStore.GamingStore.DL.Repositories
 
         public async Task<IdentityUserRoles?> FindByNameAsync(string roleName, CancellationToken cancellationToken)
         {
-            using (var connect = new SqlConnection(_configuration.GetConnectionString("ConnectionString")))
+            using (var connect = new SqlConnection(_configuration.GetConnectionString(_sqlConfiguration.ConnectionString)))
             {
                  await connect.OpenAsync();
 

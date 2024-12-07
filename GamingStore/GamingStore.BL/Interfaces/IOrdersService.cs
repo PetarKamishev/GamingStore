@@ -14,10 +14,10 @@ namespace GamingStore.GamingStore.BL.Interfaces
         Task<List<Orders>> GetOrdersByClientName(string clientName);
 
         Task<List<Orders>> GetSpecificGameOrders(string gameTitle);
+
+        Task<int> GetOrdersCount();
         Task AddOrder(Orders orders);
 
         Task RemoveOrder(int id);
-
-        Task DataflowExecute();
     }
 }
