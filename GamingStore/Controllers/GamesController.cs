@@ -23,7 +23,8 @@ namespace GamingStore.Controllers
         [HttpGet("GetAllGames")]
         public async Task<List<Games>> GetAllGames()
         {
-            return await _gamesService.GetAllGames();
+            var result = await _gamesService.GetAllGames();
+            return result;
         }
 
         [HttpGet("GetGame")]

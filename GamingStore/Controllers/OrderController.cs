@@ -28,7 +28,8 @@ namespace GamingStore.Controllers
 
         public async Task<List<Orders>> GetAllOrders()
         {
-            return await _ordersService.GetAllOrders();
+            var result = await _ordersService.GetAllOrders();
+            return result;
         }
 
         [HttpGet("GetOrdersByGameId")]

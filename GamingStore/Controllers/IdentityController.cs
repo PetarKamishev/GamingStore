@@ -61,20 +61,28 @@ namespace GamingStore.Controllers
             if (string.IsNullOrEmpty(request.UserName) || string.IsNullOrEmpty(request.Password))
             {
                 return BadRequest();
-            }        
-            return Ok(await _identityService.LoginAsync(request.UserName, request.Password));           
+            }
+            return Ok(await _identityService.LoginAsync(request.UserName, request.Password));
         }
 
         [HttpGet("GetRoles")]
 
-        public async Task<IEnumerable<string>> GetRoles(string userId)
+        public async Task<IActionResult> GetRoles(string userId)
         {
-                var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user != null)
             {
-                return await _identityService.GetRoles(user);
+                var result = await _identityService.GetRoles(user);
+                if (result != null)
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return NotFound("No roles found!");
+                }
             }
-            else return null;
+            else return BadRequest("User not found!");
         }
 
         [HttpPost("LogOut")]

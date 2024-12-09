@@ -1,7 +1,5 @@
 ﻿using Confluent.Kafka;
 using GamingStore.GamingStore.BL.Interfaces;
-using GamingStore.GamingStore.BL.Services;
-using GamingStore.GamingStore.DL.Interfaces;
 using GamingStore.GamingStore.DL.Kafka;
 using GamingStore.GamingStore.Models.Models;
 
@@ -29,13 +27,11 @@ namespace GamingStore.GamingStore.BL.BackgroundJobs
         public Task StartAsync(CancellationToken cancellationToken)
         {
             Task.Run(() =>
-            {
-                Console.WriteLine("Consuming Begins!");
+            {               
                 _consumer.Subscribe("gamingstoresales-events");
                 while(!cancellationToken.IsCancellationRequested)
                 {
-                    var result =  _consumer.Consume();
-                    Console.WriteLine(result.Message.Value.ClientName);
+                    var result =  _consumer.Consume();                   
                     if (result != null)
                     {
                         _orders.Add(result.Message.Value);
