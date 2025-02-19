@@ -1,20 +1,10 @@
-
-using GamingStore.AutoMapper;
 using GamingStore.Extensions;
-using GamingStore.GamingStore.BL.Interfaces;
-using GamingStore.GamingStore.BL.Services;
-using GamingStore.GamingStore.DL.Interfaces;
+using GamingStore.GamingStore.DL.Kafka;
 using GamingStore.GamingStore.DL.Repositories;
-using GamingStore.GamingStore.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using FluentValidation;
-using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
-using GamingStore.GamingStore.Models.Models.Users;
-using Microsoft.AspNetCore.Identity;
 
 namespace GamingStore
 {
@@ -90,7 +80,7 @@ namespace GamingStore
 
             app.MapControllers();
 
-            app.Run();
+            app.Run();       
         }
     }
 }

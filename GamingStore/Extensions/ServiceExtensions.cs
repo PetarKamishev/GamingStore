@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using GamingStore.AutoMapper;
+using GamingStore.GamingStore.BL.BackgroundJobs;
 using GamingStore.GamingStore.BL.Interfaces;
 using GamingStore.GamingStore.BL.Services;
 using GamingStore.GamingStore.DL.Interfaces;
@@ -29,6 +30,9 @@ namespace GamingStore.Extensions
             services.AddSwaggerGen();
             services.AddSingleton<IGamesService, GamesService>();
             services.AddSingleton<IOrdersService, OrdersService>();
+            services.AddTransient<IGetGameTitlesByClientNameService, GetGameTitlesByClientNameService>();
+            services.AddSingleton<IDataflowService, DataflowService>();
+            services.AddHostedService<OrderConsumeService>();
             services.AddTransient<IIdentityService, IdentityService>();
             services.AddSingleton(jwtSettings);            
             services.AddAutoMapper(typeof(AutoMapping));

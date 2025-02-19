@@ -2,7 +2,7 @@
 {
     public class SQLConfiguration
     {
-        public string ConnectionString { get; set; }
+        public string ConnectionString { get; set; } = "ConnectionString";
        
     }
 }

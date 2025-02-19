@@ -1,16 +1,14 @@
 ﻿using GamingStore.GamingStore.BL.Interfaces;
+
 using GamingStore.GamingStore.DL.Interfaces;
-using GamingStore.GamingStore.DL.Kafka;
 using GamingStore.GamingStore.Models.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
 
 namespace GamingStore.GamingStore.BL.Services
 {
     public class OrdersService : IOrdersService
     {
         private readonly IOrdersRepository _ordersRepository;
-       
+
 
         public OrdersService(IOrdersRepository ordersRepository)
         {
@@ -18,7 +16,7 @@ namespace GamingStore.GamingStore.BL.Services
         }
         public async Task AddOrder(Orders orders)
         {
-            await _ordersRepository.AddOrder(orders);           
+            await _ordersRepository.AddOrder(orders);
         }
 
         public async Task<List<Orders>> GetAllOrders()
@@ -43,6 +41,11 @@ namespace GamingStore.GamingStore.BL.Services
         {
             var result = await _ordersRepository.GetOrdersByOrderId(id);
             return result;
+        }
+
+        public async Task<int> GetOrdersCount()
+        {           
+            return await _ordersRepository.GetOrdersCount();
         }
 
         public async Task<List<Orders>> GetSpecificGameOrders(string gameTitle)
